@@ -12,8 +12,9 @@ using namespace imageresizer;
 
 int main(int argc, char *argv[]) {
     YAML::Node config;
+    const char *configPath = argc == 2 ? argv[1] : "config.yaml";
     try {
-        config = YAML::LoadFile("config.yaml");
+        config = YAML::LoadFile(configPath);
     } catch(std::exception &e) {
         std::cout<<"Error reading config file: "<<e.what()<<std::endl;
         return EXIT_FAILURE;

@@ -67,10 +67,10 @@ Resizer::handleResizeRequest(const Net::Rest::Request& request, Net::Http::Respo
     auto imageFileName = request.param(":imageFileName").as<std::string>();
     auto width = request.param(":width").as<int32_t>();
     auto height = request.param(":height").as<int32_t>();
-    //if(!regex_match(imageFileName, std::regex("^[a-bA-B0-9_-]*.png$"))) {
-    //    response.send(Net::Http::Code::Bad_Request, Message("Invalid request"), MIME( Application, Json ));
-    //    return;
-    //}
+    if(!regex_match(imageFileName, std::regex("^[a-zA-Z0-9_-]*.(png|jpg|gif)$"))) {
+        response.send(Net::Http::Code::Bad_Request, Message("Invalid request"), MIME( Application, Json ));
+        return;
+    }
     if(_dataManager.exists(imageFileName, width, height)) {
         Net::Http::serveFile(response,
                         _dataManager.path(imageFileName, width, height).c_str());
