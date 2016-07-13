@@ -1,0 +1,4 @@
+#!/bin/bash
+files=$(find . -name '*.h' -o -name '*.cpp')
+ctags ${files}
+cscope ${files}

@@ -1,0 +1,5 @@
+port: 9080
+imageDir: /tmp
+threads: 2
+sourceImageDir: /home/santanu/Documents/banks
+imageCacheDir: /tmp/banks
