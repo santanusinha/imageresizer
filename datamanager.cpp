@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <algorithm>
 
 #include "datamanager.h"
 #include "threadcounter.h"
@@ -26,11 +27,11 @@ const std::string
 DataManager::get(const std::string &image, int32_t width, int32_t height, const Magick::Image &source) const{
     const std::string &imagePath = path(image, width, height);
     std::cout<<"Path: "<<imagePath<<std::endl;
-    if(!exists(imagePath)) {
-        std::cout<<"Path doesn not exist: "<<imagePath<<std::endl;
-        save(imagePath, width, height, source);
-        std::cout<<"Image created: "<<imagePath<<std::endl;
-    }
+    //if(!exists(imagePath)) {
+    std::cout<<"Path doesn not exist: "<<imagePath<<std::endl;
+    save(imagePath, width, height, source);
+    std::cout<<"Image created: "<<imagePath<<std::endl;
+    //}
     return imagePath;
 }
 
@@ -55,8 +56,10 @@ DataManager::save(
 
 const std::string
 DataManager::path(const std::string &image, int32_t width, int32_t height) const {
+    auto copied = image;
+    replace(copied.begin(), copied.end(), '/', '_');
     std::ostringstream sout;
-    sout<<Config::instance().getImageCacheDir()<<"/"<<_threadId<<"-"<<width<<"x"<<height<<"-"<<image;
+    sout<<Config::instance().getImageCacheDir()<<"/"<<_threadId<<"-"<<width<<"x"<<height<<"-"<<copied;
     return sout.str();
 }
 

@@ -1,5 +1,10 @@
 port: 9080
 imageDir: /tmp
 threads: 2
-sourceImageDir: /home/santanu/Documents/banks
+port: 8080
+imageDir: /tmp
+threads: 1
+sourceImageDir: /home/santanu/Work/PhonePe/project.images
 imageCacheDir: /tmp/banks
+cacheTimeSeconds: 3600
+

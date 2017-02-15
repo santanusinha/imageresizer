@@ -31,6 +31,10 @@ public:
                 const Net::Rest::Request& request,
                 Net::Http::ResponseWriter response);
 
+    void
+    handleHealthcheckRequest(
+                const Net::Rest::Request& request,
+                Net::Http::ResponseWriter response);
 private:
     std::shared_ptr<Net::Http::Endpoint> _httpEndpoint;
     const std::string _sourceImageDir;

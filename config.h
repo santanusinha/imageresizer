@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <yaml-cpp/yaml.h>
+#include <boost/program_options.hpp>
 
 namespace imageresizer {
 
@@ -20,6 +21,10 @@ class Config {
             return threads;
         }
 
+        int32_t getCacheTimeSeconds() const {
+            return cacheTimeSeconds;
+        }
+
         const std::string &getImageDir() const {
             return imageDir;
         }
@@ -32,18 +37,13 @@ class Config {
             return imageCacheDir;
         }
 
-        void initialize(const YAML::Node &config) {
-            port = config["port"].as<int32_t>();
-            threads = config["threads"].as<int32_t>();
-            imageDir = config["imageDir"].as<std::string>();
-            sourceImageDir = config["sourceImageDir"].as<std::string>();
-            imageCacheDir = config["imageCacheDir"].as<std::string>();
-        }
+        bool initialize(int argc, char *argv[]);
 
     private:
         
         int32_t port;
         int32_t threads;
+        int32_t cacheTimeSeconds;
         std::string imageDir;
         std::string sourceImageDir;
         std::string imageCacheDir;

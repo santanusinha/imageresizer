@@ -5,20 +5,22 @@ project(imageresizer CXX)
 find_package(PkgConfig)
 find_package(ImageMagick)
 find_package(ImageMagick COMPONENTS Magick++ REQUIRED)
+find_package(Boost 1.58 COMPONENTS program_options REQUIRED)
 
-pkg_check_modules(YAML QUIET yaml-cpp)
+pkg_check_modules(YAML REQUIRED yaml-cpp)
 
 set( CMAKE_CXX_FLAGS   "${CMAKE_CXX_FLAGS} -fstack-protector -fstack-protector-all -Wall -Werror -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16" )
 set( CMAKE_C_FLAGS_DEBUG   "-O0 -ggdb -DDEBUG" )
-set( CMAKE_C_FLAGS_RELEASE "-O4" )
+set( CMAKE_C_FLAGS_RELEASE "-O4 -Wno-error" )
 
-set(PISTASCHE_HOME "/usr/local/")
-set(YAML_HOME "/usr/local/")
+add_subdirectory(external/googletest)
+#add_subdirectory(external/yaml-cpp)
+add_subdirectory(external/pistache)
 
-include_directories(${PISTASCHE_HOME}/include ${ImageMagick_INCLUDE_DIRS} ${YAML_HOME}/include )
+include_directories(${pistache_INCLUDE_DIR} ${YAML_INCLUDE_DIRS} ${ImageMagick_INCLUDE_DIRS} ${Boost_INCLUDE_DIR}  external/spdlog/include)
 
-add_executable(imageresizer threadcounter.cpp datamanager.cpp resizer.cpp main.cpp)
+add_executable(imageresizer accesslog.cpp util.cpp config.cpp threadcounter.cpp datamanager.cpp resizer.cpp main.cpp)
 
-target_link_libraries (imageresizer ${PISTASCHE_HOME}/lib/libnet_static.a ${ImageMagick_LIBRARIES} ${YAML_HOME}/lib/libyaml-cpp.a pthread)
+target_link_libraries (imageresizer net_static ${YAML_STATIC_LIBRARIES} ${ImageMagick_LIBRARIES} ${Boost_LIBRARIES} pthread)
 
 target_compile_features(imageresizer PRIVATE cxx_range_for)

@@ -1,4 +1,4 @@
 #!/bin/bash
-files=$(find . -name '*.h' -o -name '*.cpp')
+files=$(find . -name '*.h' -o -name '*.cpp' -o -name '*.cc')
 ctags ${files}
 cscope ${files}

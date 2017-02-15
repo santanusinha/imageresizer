@@ -1,28 +1,27 @@
-#include <iostream>
 #include <cstdlib>
 #include <sstream>
 #include <pistache/endpoint.h>
 #include <yaml-cpp/yaml.h>
 #include <ImageMagick-6/Magick++.h>
+#include <boost/program_options.hpp>
 
 #include "config.h"
+#include "logger.h"
 #include "resizer.h"
+#include "util.h"
 
 using namespace imageresizer;
+namespace po = boost::program_options;
 
 int main(int argc, char *argv[]) {
-    YAML::Node config;
-    const char *configPath = argc == 2 ? argv[1] : "config.yaml";
-    try {
-        config = YAML::LoadFile(configPath);
-    } catch(std::exception &e) {
-        std::cout<<"Error reading config file: "<<e.what()<<std::endl;
+    spdlog::stdout_logger_mt("console");
+    Config::instance().initialize(argc, argv);
+    if(!ensurePath(Config::instance().getSourceImageDir(), false)) {
         return EXIT_FAILURE;
     }
-    Config::instance().initialize(config);
-    std::cout<<"Port: "<<Config::instance().getPort()<<std::endl;
-    std::cout << "Cores = " << hardware_concurrency() << std::endl;
-    std::cout << "Using " << Config::instance().getThreads() << " threads" << std::endl;
+    INFO("Port: {}", Config::instance().getPort());
+    INFO("Cores: {} ", hardware_concurrency());
+    INFO("Threads: {}", Config::instance().getThreads());
 
     Net::Address addr(Net::Ipv4::any(), Net::Port(Config::instance().getPort()));
     Resizer stats(addr,
