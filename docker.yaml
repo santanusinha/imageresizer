@@ -1,0 +1,5 @@
+port: 8080
+imageDir: /images-scratch
+threads: 2
+sourceImageDir: /images
+imageCacheDir: /tmp/images-cache

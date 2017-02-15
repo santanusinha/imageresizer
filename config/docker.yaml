@@ -1,0 +1,6 @@
+port: 8080
+imageDir: /tmp
+threads: 2
+sourceImageDir: /images
+imageCacheDir: /tmp/images-cache
+cacheTimeSeconds: 3600
