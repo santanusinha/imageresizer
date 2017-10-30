@@ -9,7 +9,7 @@ namespace imageresizer {
 
 bool
 exists(const std::string &file) {
-    struct stat buffer;   
+    struct stat buffer;
     return (stat(file.c_str(), &buffer) == 0);
 }
 

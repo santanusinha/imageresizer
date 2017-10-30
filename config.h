@@ -40,7 +40,7 @@ class Config {
         bool initialize(int argc, char *argv[]);
 
     private:
-        
+
         int32_t port;
         int32_t threads;
         int32_t cacheTimeSeconds;
@@ -56,6 +56,6 @@ class Config {
 
         Config(const Config &) = delete;
         Config& operator=(const Config &) = delete;
-        
+
 };
 } //namespace imageresizer

@@ -20,7 +20,7 @@ Config::initialize(int argc, char *argv[]) {
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
-    po::notify(vm);    
+    po::notify(vm);
 
     if (vm.count("help")) {
         std::cout << desc <<std::endl;

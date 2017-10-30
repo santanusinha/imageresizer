@@ -26,18 +26,14 @@ DataManager::exists(const std::string &image, int32_t width, int32_t height) con
 const std::string
 DataManager::get(const std::string &image, int32_t width, int32_t height, const Magick::Image &source) const{
     const std::string &imagePath = path(image, width, height);
-    std::cout<<"Path: "<<imagePath<<std::endl;
-    //if(!exists(imagePath)) {
-    std::cout<<"Path doesn not exist: "<<imagePath<<std::endl;
     save(imagePath, width, height, source);
     std::cout<<"Image created: "<<imagePath<<std::endl;
-    //}
     return imagePath;
 }
 
 bool
 DataManager::exists(const std::string &image) const{
-    struct stat buffer;   
+    struct stat buffer;
     return (stat(image.c_str(), &buffer) == 0);
 }
 

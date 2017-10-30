@@ -1,8 +1,8 @@
 #pragma once
 
-#include <pistache/http.h>
-#include <pistache/router.h>
-#include <pistache/endpoint.h>
+#include <http.h>
+#include <router.h>
+#include <endpoint.h>
 
 namespace imageresizer {
 
@@ -27,20 +27,14 @@ public:
     setupRoutes();
 
     void
-    handleResizeRequest(
-                const Net::Rest::Request& request,
-                Net::Http::ResponseWriter response);
+    handle(const Net::Rest::Request& request, Net::Http::ResponseWriter response);
 
-    void
-    handleHealthcheckRequest(
-                const Net::Rest::Request& request,
-                Net::Http::ResponseWriter response);
 private:
     std::shared_ptr<Net::Http::Endpoint> _httpEndpoint;
     const std::string _sourceImageDir;
     const std::string _cachedImageDir;
     Net::Rest::Router _router;
-    
+
 };
 
 } //namespace imageresizer

@@ -1,7 +1,7 @@
 #pragma once
 #include <chrono>
-#include <pistache/http.h>
-#include <pistache/router.h>
+#include <http.h>
+#include <router.h>
 
 namespace imageresizer {
 

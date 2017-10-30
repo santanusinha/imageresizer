@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <sstream>
-#include <pistache/endpoint.h>
+#include <endpoint.h>
 #include <yaml-cpp/yaml.h>
 #include <ImageMagick-6/Magick++.h>
 #include <boost/program_options.hpp>

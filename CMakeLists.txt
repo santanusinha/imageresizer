@@ -17,7 +17,7 @@ add_subdirectory(external/googletest)
 #add_subdirectory(external/yaml-cpp)
 add_subdirectory(external/pistache)
 
-include_directories(${pistache_INCLUDE_DIR} ${YAML_INCLUDE_DIRS} ${ImageMagick_INCLUDE_DIRS} ${Boost_INCLUDE_DIR}  external/spdlog/include)
+include_directories(external/pistache/include ${pistache_INCLUDE_DIR} ${YAML_INCLUDE_DIRS} ${ImageMagick_INCLUDE_DIRS} ${Boost_INCLUDE_DIR}  external/spdlog/include)
 
 add_executable(imageresizer accesslog.cpp util.cpp config.cpp threadcounter.cpp datamanager.cpp resizer.cpp main.cpp)
 
