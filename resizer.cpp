@@ -140,6 +140,11 @@ Resizer::handle(const Net::Rest::Request& request, Net::Http::ResponseWriter res
 #ifdef DEBUG
     std::cout<<"File Exists .. checking cache: "<<imageFileName<<std::endl;
 #endif
+    response.headers().add(
+                        std::make_shared<Net::Http::Header::CacheControl>(
+                            Net::Http::CacheDirective(
+                                Net::Http::CacheDirective::Directive::MaxAge,
+                                std::chrono::seconds(Config::instance().getCacheTimeSeconds()))));
     if(_dataManager.exists(imageFileName, width, height)) {
 #ifdef DEBUG
         std::cout<<"Exists in cache"<<std::endl;
@@ -157,11 +162,6 @@ Resizer::handle(const Net::Rest::Request& request, Net::Http::ResponseWriter res
     std::cout<<"Sending generated image "<< imageFileNamePart << std::endl;
     Magick::Image master(imageFileName);
     auto resizedImage = _dataManager.get(imageFileName, width, height, master);
-    response.headers().add(
-                        std::make_shared<Net::Http::Header::CacheControl>(
-                            Net::Http::CacheDirective(
-                                Net::Http::CacheDirective::Directive::MaxAge,
-                                std::chrono::seconds(Config::instance().getCacheTimeSeconds()))));
     Net::Http::serveFile(response, resizedImage.c_str());
 }
 
