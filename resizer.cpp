@@ -119,6 +119,11 @@ Resizer::handle(const Net::Rest::Request& request, Net::Http::ResponseWriter res
         response.send(Net::Http::Code::Bad_Request, Message("Invalid request"), MIME( Application, Json ));
         return;
     }
+    if(width <= 0 || height <= 0) {
+        response.send(Net::Http::Code::Bad_Request,
+                        Message("Invalid image dimensions specified"), MIME( Application, Json ));
+        return;
+    }
     std::string imageFilePath = _sourceImageDir + "/";
     for(size_t i = 1; i < urlPartsSize - 3; i++ ) {
         imageFilePath += urlParts[i] + "/";
@@ -161,8 +166,14 @@ Resizer::handle(const Net::Rest::Request& request, Net::Http::ResponseWriter res
     }
     std::cout<<"Sending generated image "<< imageFileNamePart << std::endl;
     Magick::Image master(imageFileName);
-    auto resizedImage = _dataManager.get(imageFileName, width, height, master);
-    Net::Http::serveFile(response, resizedImage.c_str());
+    try {
+        auto resizedImage = _dataManager.get(imageFileName, width, height, master);
+        Net::Http::serveFile(response, resizedImage.c_str());
+    } catch(...) {
+        response.send(Net::Http::Code::Internal_Server_Error,
+                        Message("Could not process the image"), MIME( Application, Json ));
+        return;
+    }
 }
 
 } //namespace imageresizer
