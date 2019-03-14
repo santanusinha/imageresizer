@@ -14,36 +14,36 @@ struct EnumClassHash
     }
 };
 
-const std::unordered_map<Net::Http::Method, std::string, EnumClassHash> REQ_METHODS = {
-      { Net::Http::Method::Options, "OPTIONS"}
-    , { Net::Http::Method::Get, "GET"}
-    , { Net::Http::Method::Post, "POST"}
-    , { Net::Http::Method::Head, "HEAD"}
-    , { Net::Http::Method::Put, "PUT"}
-    , { Net::Http::Method::Delete, "DELETE"}
-    , { Net::Http::Method::Trace, "TRACE"}
-    , { Net::Http::Method::Connect, "CONNECT"}
+const std::unordered_map<Pistache::Http::Method, std::string, EnumClassHash> REQ_METHODS = {
+      { Pistache::Http::Method::Options, "OPTIONS"}
+    , { Pistache::Http::Method::Get, "GET"}
+    , { Pistache::Http::Method::Post, "POST"}
+    , { Pistache::Http::Method::Head, "HEAD"}
+    , { Pistache::Http::Method::Put, "PUT"}
+    , { Pistache::Http::Method::Delete, "DELETE"}
+    , { Pistache::Http::Method::Trace, "TRACE"}
+    , { Pistache::Http::Method::Connect, "CONNECT"}
 };
 
-const std::unordered_map<Net::Http::Version, std::string, EnumClassHash> REQ_VERSIONS = {
-      { Net::Http::Version::Http10, "HTTP/1.0"}
-    , { Net::Http::Version::Http11, "HTTP/1.1"}
+const std::unordered_map<Pistache::Http::Version, std::string, EnumClassHash> REQ_VERSIONS = {
+      { Pistache::Http::Version::Http10, "HTTP/1.0"}
+    , { Pistache::Http::Version::Http11, "HTTP/1.1"}
 };
 
 const std::string &
-resolve(const Net::Http::Method &method) {
+resolve(const Pistache::Http::Method &method) {
     return (*REQ_METHODS.find(method)).second;
 }
 
 const std::string &
-resolve(const Net::Http::Version &version) {
+resolve(const Pistache::Http::Version &version) {
     return (*REQ_VERSIONS.find(version)).second;
 }
 
 }
 
 namespace imageresizer {
-AccessLog::AccessLog(const Net::Rest::Request& request, const Net::Http::ResponseWriter &response)
+AccessLog::AccessLog(const Pistache::Rest::Request& request, const Pistache::Http::ResponseWriter &response)
     :request(request),
     response(response),
     startTime(std::chrono::steady_clock::now()) {

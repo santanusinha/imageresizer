@@ -1,9 +1,12 @@
 #include <cstdlib>
 #include <sstream>
-#include <endpoint.h>
-#include <yaml-cpp/yaml.h>
-#include <ImageMagick-6/Magick++.h>
+#include <thread>
+
 #include <boost/program_options.hpp>
+#include <boost/next_prior.hpp>
+#include <ImageMagick-6/Magick++.h>
+#include <pistache/endpoint.h>
+#include <yaml-cpp/yaml.h>
 
 #include "config.h"
 #include "logger.h"
@@ -20,10 +23,10 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
     INFO("Port: {}", Config::instance().getPort());
-    INFO("Cores: {} ", hardware_concurrency());
+    INFO("Cores: {} ", std::thread::hardware_concurrency());
     INFO("Threads: {}", Config::instance().getThreads());
 
-    Net::Address addr(Net::Ipv4::any(), Net::Port(Config::instance().getPort()));
+    Pistache::Address addr(Pistache::Ipv4::any(), Pistache::Port(Config::instance().getPort()));
     Resizer stats(addr,
                 Config::instance().getSourceImageDir(),
                 Config::instance().getImageCacheDir());

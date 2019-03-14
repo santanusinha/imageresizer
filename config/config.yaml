@@ -1,8 +1,5 @@
 port: 9080
 imageDir: /tmp
-threads: 2
-port: 8080
-imageDir: /tmp
 threads: 1
 sourceImageDir: /home/santanu/Work/PhonePe/project.images
 imageCacheDir: /tmp

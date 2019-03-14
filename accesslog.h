@@ -1,17 +1,17 @@
 #pragma once
 #include <chrono>
-#include <http.h>
-#include <router.h>
+#include <pistache/http.h>
+#include <pistache/router.h>
 
 namespace imageresizer {
 
 class AccessLog {
 public:
-    AccessLog(const Net::Rest::Request& request, const Net::Http::ResponseWriter &response);
+    AccessLog(const Pistache::Rest::Request& request, const Pistache::Http::ResponseWriter &response);
     ~AccessLog();
 private:
-    const Net::Rest::Request& request;
-    const Net::Http::ResponseWriter &response;
+    const Pistache::Rest::Request& request;
+    const Pistache::Http::ResponseWriter &response;
     std::chrono::steady_clock::time_point startTime;
 };
 

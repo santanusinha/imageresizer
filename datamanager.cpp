@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <algorithm>
 
+#include <boost/next_prior.hpp>
+
 #include "datamanager.h"
 #include "threadcounter.h"
 
@@ -46,7 +48,7 @@ DataManager::save(
     Magick::Image dest(source);
     std::ostringstream dimensions;
     dimensions<<width<<"x"<<height;
-    dest.resize(dimensions.str());
+    dest.sample(dimensions.str());
     dest.write(image);
 }
 
